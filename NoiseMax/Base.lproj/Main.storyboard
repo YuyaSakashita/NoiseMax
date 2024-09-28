@@ -3,6 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Map view configurations" minToolsVersion="14.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -13,16 +14,27 @@
             <objects>
                 <viewController id="OPf-4r-acj" customClass="MapViewController" customModule="NoiseMax" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Fro-yK-2is">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CwK-ah-ByQ">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="743"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <standardMapConfiguration key="preferredConfiguration"/>
+                            </mapView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="tAf-wV-G1b"/>
                         <color key="backgroundColor" red="0.098039209840000002" green="0.098039209840000002" blue="0.098039209840000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="位置" image="map" catalog="system" id="zQn-aO-bjc"/>
+                    <navigationItem key="navigationItem" id="lKt-k2-eYY"/>
+                    <connections>
+                        <outlet property="mapView" destination="CwK-ah-ByQ" id="lFp-ii-8ZL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="amw-kf-y7k" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1760" y="361"/>
+            <point key="canvasLocation" x="1760" y="446"/>
         </scene>
         <!--計測-->
         <scene sceneID="n36-EB-PzV">
@@ -42,17 +54,26 @@
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ozo-fS-Kx8">
                                 <rect key="frame" x="76" y="306" width="240" height="240"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uqc-Ni-WKQ">
+                                        <rect key="frame" x="30" y="98" width="181" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="32"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemGray5Color"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dc5-aN-ywe">
                                 <rect key="frame" x="147" y="595" width="99" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="計測開始">
+                                <buttonConfiguration key="configuration" style="plain" title="計測する">
                                     <backgroundConfiguration key="background" cornerRadius="7">
                                         <color key="backgroundColor" systemColor="systemGreenColor"/>
                                     </backgroundConfiguration>
-                                    <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="20"/>
+                                    <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="20"/>
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
@@ -66,8 +87,10 @@
                     <tabBarItem key="tabBarItem" title="計測" image="mic" catalog="system" id="9Bg-7d-KoU"/>
                     <connections>
                         <outlet property="circleView" destination="ozo-fS-Kx8" id="LIw-dY-DeS"/>
+                        <outlet property="decibelLabel" destination="Uqc-Ni-WKQ" id="AiK-Cv-Js7"/>
                         <outlet property="measureButton" destination="dc5-aN-ywe" id="0m5-tU-xgO"/>
                         <outlet property="statusLabel" destination="b2v-ST-zGg" id="8cp-YH-dr3"/>
+                        <segue destination="OPf-4r-acj" kind="show" identifier="toMapView" id="H6h-mE-ue6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y6O-Wf-wbf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -78,7 +101,7 @@
         <scene sceneID="JIr-ii-WFf">
             <objects>
                 <tabBarController id="Ogv-gT-6Mn" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LI7-Bd-nUZ">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="LI7-Bd-nUZ">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -94,6 +117,9 @@
             <point key="canvasLocation" x="854" y="4"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="H6h-mE-ue6"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="map" catalog="system" width="128" height="112"/>
         <image name="mic" catalog="system" width="110" height="128"/>
